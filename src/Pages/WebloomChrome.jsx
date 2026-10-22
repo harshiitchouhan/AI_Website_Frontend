@@ -5,13 +5,13 @@ import webloomLogo from "../assets/Webloom.png";
 const navigation = [
     { label: "Home", path: "/" },
     { label: "Explore", path: "/explore" },
+    { label: "Pricing", path: "/pricing" },
     { label: "Why Webloom", path: "/why-webloom" },
 ];
 
 export function WebloomNavbar() {
     return (
-        <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#090914]/85 backdrop-blur-2xl">
-            <nav className="mx-auto flex h-19 w-full max-w-7xl items-center justify-between gap-4 px-5 sm:px-8 lg:px-10">
+            <header className="relative z-40 border-b border-violet-300/10 bg-[radial-gradient(ellipse_at_50%_0%,rgba(139,92,246,0.10),transparent_70%),linear-gradient(180deg,#100d20_0%,#0b0a18_100%)] text-white backdrop-blur-xl">            <nav className="mx-auto flex h-19 w-full max-w-7xl items-center justify-between gap-4 px-5 sm:px-8 lg:px-10">
                 <Link
                     to="/"
                     className="group inline-flex shrink-0 items-center"

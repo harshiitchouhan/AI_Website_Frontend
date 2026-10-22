@@ -11,6 +11,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import Studio from "./Pages/Studio.";
 import Projects from "./Pages/Projects";
 import DeployedSite from "./Pages/DeployedSite";
+import Pricing from "./Pages/Pricing"
 
 function App(){
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App(){
           <Route path="/why-webloom" element={<WhyWebloom />} />
           <Route path="/login" element={<Login />} />
           <Route path="/site/:slug" element={<DeployedSite />} />
+          <Route path="/pricing" element={<Pricing/>} />
         </Routes>
       </BrowserRouter>
       

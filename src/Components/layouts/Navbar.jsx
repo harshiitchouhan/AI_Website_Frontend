@@ -8,7 +8,8 @@ import webloomLogo from "../../assets/Webloom.png";
 const navLinks = [
     { label: "Home", to: "/" },
     { label: "Projects", to: "/projects" },
-    { label: "Studio" , to : "/studio"}
+    { label: "Studio" , to : "/studio"},
+    { label: "Pricing" , to : "/pricing"},
 ];
 
 function Brand() {
@@ -16,7 +17,7 @@ function Brand() {
         <Link
             to="/"
             aria-label="Webloom home"
-            className="inline-flex items-center rounded-[9px] bg-white px-3 py-2 transition hover:bg-violet-100"
+            className="inline-flex items-center justify-self-start rounded-[9px] bg-white px-3 py-2 transition hover:bg-violet-100"
         >
             <img
                 src={webloomLogo}
@@ -174,7 +175,7 @@ function AccountMenu({ compact = false, onNavigate = () => {} }) {
                                         setOpen(false);
                                         onNavigate();
                                     }}
-                                    className="block rounded-xl bg-violet-200 px-3 py-3 text-sm font-semibold text-[#171126] transition hover:bg-violet-100"
+                                    className="block rounded-xl bg-violet-200 px-2 py-2 text-sm font-semibold text-[#171126] transition hover:bg-violet-100"
                                 >
                                     Login
                                 </Link>
@@ -184,7 +185,7 @@ function AccountMenu({ compact = false, onNavigate = () => {} }) {
                                         setOpen(false);
                                         onNavigate();
                                     }}
-                                    className="mt-1 block rounded-xl px-3 py-3 text-sm font-medium text-violet-200 transition hover:bg-white/6"
+                                    className="mt-1 block rounded-xl px-2 py-2 text-sm font-medium text-violet-200 transition hover:bg-white/6"
                                 >
                                     Signup
                                 </Link>
@@ -204,22 +205,37 @@ function AccountMenu({ compact = false, onNavigate = () => {} }) {
 }
 
 // Motion-powered Webloom credit counter. This stays in sync when Studio completes a generation.
+
 function CreditCoin({ compact = false }) {
+    const navigate = useNavigate();
     const { user } = useSelector((state) => state.auth);
     const reduceMotion = useReducedMotion();
+
     const [credits, setCredits] = useState(
         typeof user?.credits === "number" ? user.credits : null
     );
-    const [flips, setFlips] = useState(0);
 
+    const [flips, setFlips] = useState(0);
+    const [isActive, setIsActive] = useState(false);
+
+    const coinTravel = compact ? 78 : 88;
+
+    // Sync credits with Redux
     useEffect(() => {
-        setCredits(typeof user?.credits === "number" ? user.credits : null);
+        setCredits(
+            typeof user?.credits === "number" ? user.credits : null
+        );
     }, [user?.credits]);
 
+    // Fetch latest credits from backend
     useEffect(() => {
         if (!user) return;
+
         const controller = new AbortController();
-        const apiUrl = (import.meta.env.VITE_API_URL || "http://localhost:4000").replace(/\/$/, "");
+
+        const apiUrl = (
+            import.meta.env.VITE_API_URL || "http://localhost:4000"
+        ).replace(/\/$/, "");
 
         async function refreshCredits() {
             try {
@@ -227,78 +243,243 @@ function CreditCoin({ compact = false }) {
                     credentials: "include",
                     signal: controller.signal,
                 });
+
                 if (!response.ok) return;
+
                 const data = await response.json();
-                const account = data.user || data.data?.user || data.data || data;
-                if (typeof account.credits === "number" && !controller.signal.aborted) {
+
+                const account =
+                    data.user ||
+                    data.data?.user ||
+                    data.data ||
+                    data;
+
+                if (
+                    typeof account.credits === "number" &&
+                    !controller.signal.aborted
+                ) {
                     setCredits(account.credits);
                 }
             } catch {
-                // Keep the Redux balance if the refresh is temporarily unavailable.
+                // Keep the Redux credits if refresh fails.
             }
         }
 
         refreshCredits();
+
         return () => controller.abort();
     }, [user?._id, user?.id]);
 
+    // Listen for credit updates after AI generation
     useEffect(() => {
         const updateCredits = (event) => {
             if (typeof event.detail?.credits === "number") {
                 setCredits(event.detail.credits);
-                if (!reduceMotion) setFlips((current) => current + 1);
+
+                if (!reduceMotion) {
+                    setFlips((current) => current + 1);
+                }
             }
         };
-        window.addEventListener("webloom:credits-updated", updateCredits);
-        return () => window.removeEventListener("webloom:credits-updated", updateCredits);
+
+        window.addEventListener(
+            "webloom:credits-updated",
+            updateCredits
+        );
+
+        return () => {
+            window.removeEventListener(
+                "webloom:credits-updated",
+                updateCredits
+            );
+        };
     }, [reduceMotion]);
+
+    const startAnimation = () => {
+        if (isActive) return;
+
+        setIsActive(true);
+
+        if (!reduceMotion) {
+            setFlips((current) => current + 1);
+        }
+    };
+
+    const resetAnimation = () => {
+        setIsActive(false);
+    };
 
     if (!user) return null;
 
     return (
-        <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: -7 }}
+        <motion.button
+            type="button"
+            onClick={() => navigate("/pricing")}
+            onHoverStart={startAnimation}
+            onHoverEnd={resetAnimation}
+            onFocus={startAnimation}
+            onBlur={resetAnimation}
+            initial={
+                reduceMotion
+                    ? false
+                    : { opacity: 0, y: -7 }
+            }
             animate={{ opacity: 1, y: 0 }}
-            whileHover={reduceMotion ? {} : { scale: 1.045, y: -1 }}
-            onHoverStart={() => {
-                if (!reduceMotion) setFlips((current) => current + 1);
-            }}
-            className={`group relative inline-flex shrink-0 items-center gap-2.5 overflow-hidden rounded-full border border-amber-300/35 bg-[#241c29] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_22px_rgba(217,167,72,0.09)] ${compact ? "px-3 py-2" : "px-3.5 py-2"}`}
-            title="Webloom credits — each AI generation costs 50"
-            aria-label={`${credits ?? "Unknown"} Webloom credits remaining. Each AI generation costs 50 credits.`}
+            whileHover={
+                reduceMotion
+                    ? {}
+                    : { scale: 1.045, y: -2 }
+            }
+            whileTap={{ scale: 0.97 }}
+            className={`group relative inline-flex h-13 shrink-0 cursor-pointer items-center overflow-hidden rounded-full border border-amber-300/35 bg-[#241c29] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_22px_rgba(217,167,72,0.09)] transition-colors hover:border-amber-300/65 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 ${
+                compact ? "w-34" : "w-36"
+            }`}
+            title="View Webloom pricing"
+            aria-label={`${credits ?? "Unknown"} Webloom credits remaining. View pricing. Each AI generation costs 50 credits.`}
         >
+            {/* Background glow */}
+            <span className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-r from-amber-200/5 via-transparent to-amber-300/5" />
+
+            {/* Animated shine */}
             <motion.span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-r from-transparent via-amber-200/10 to-transparent"
-                initial={{ x: "-110%" }}
-                animate={{ x: "110%" }}
-                transition={reduceMotion ? { duration: 0 } : { duration: 2.3, repeat: Infinity, repeatDelay: 4, ease: "easeInOut" }}
+                className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-r from-transparent via-amber-200/15 to-transparent"
+                initial={false}
+                animate={{
+                    x: isActive ? "110%" : "-110%",
+                }}
+                transition={{
+                    duration: reduceMotion ? 0 : 0.85,
+                    ease: "easeInOut",
+                }}
             />
-            <span className="relative grid h-8 w-8 shrink-0 place-items-center" style={{ perspective: "500px" }}>
+
+            {/* Credits label - moves to left on hover */}
+            <motion.span
+                className="pointer-events-none absolute left-13.5 flex flex-col items-start justify-center leading-none"
+                initial={false}
+                animate={{
+                    x: isActive && !reduceMotion ? -38 : 0,
+                }}
+                transition={{
+                    duration: reduceMotion ? 0 : 0.65,
+                    ease: [0.22, 1, 0.36, 1],
+                }}
+            >
+                <span className="text-[10px] font-bold uppercase tracking-[0.13em] text-amber-100">
+                    Credits
+                </span>
+
+                {/* Balance displayed before hovering */}
                 <motion.span
-                    className="absolute inset-0 grid place-items-center rounded-full border border-amber-200/65 bg-linear-to-br from-[#fff4b0] via-[#e8b852] to-[#a76822] shadow-[0_0_14px_rgba(244,193,87,0.45),inset_0_1px_2px_rgba(255,255,255,0.65)]"
-                    initial={reduceMotion ? false : { rotateY: -180 }}
-                    animate={{ rotateY: reduceMotion ? 0 : flips * 360 }}
-                    transition={{ type: "spring", stiffness: 140, damping: 16 }}
-                    style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
-                >
-                    <span className="grid h-5 w-5 place-items-center rounded-full border border-amber-900/35 text-sm font-black text-[#794515]">✦</span>
-                </motion.span>
-            </span>
-            <span className="relative flex flex-col items-start leading-none">
-                <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-amber-200/65">Credits</span>
-                <motion.span
-                    key={credits ?? "unknown"}
-                    initial={reduceMotion ? false : { opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-1 text-sm font-bold tabular-nums text-amber-50"
+                    initial={false}
+                    animate={{
+                        opacity: isActive ? 0 : 1,
+                        y: isActive ? -4 : 0,
+                    }}
+                    transition={{
+                        duration: reduceMotion ? 0 : 0.2,
+                    }}
+                    className="mt-1 text-[12px] font-bold tabular-nums text-amber-50"
                 >
                     {credits ?? "—"}
                 </motion.span>
+
+                {/* Subtitle appears when the coin moves */}
+                <motion.span
+                    initial={false}
+                    animate={{
+                        opacity: isActive ? 1 : 0,
+                        y: isActive ? 0 : 4,
+                    }}
+                    transition={{
+                        delay: isActive && !reduceMotion ? 0.3 : 0,
+                        duration: reduceMotion ? 0 : 0.2,
+                    }}
+                    className="absolute top-4 whitespace-nowrap text-[8px] font-medium text-amber-200/50"
+                >
+                    50 / generation
+                </motion.span>
+            </motion.span>
+
+            {/* Coin positioning */}
+            <span
+                aria-hidden="true"
+                className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2"
+                style={{ perspective: "600px" }}
+            >
+                {/* Coin travels left to right */}
+                <motion.span
+                    className="block"
+                    initial={false}
+                    animate={{
+                        x: isActive && !reduceMotion
+                            ? coinTravel
+                            : 0,
+                    }}
+                    transition={{
+                        duration: reduceMotion ? 0 : 0.85,
+                        ease: [0.22, 1, 0.36, 1],
+                    }}
+                >
+                    {/* Coin rotates independently */}
+                    <motion.span
+                        className="relative grid h-9 w-9 place-items-center rounded-full border-2 border-amber-200/80 bg-linear-to-br from-[#fff4b0] via-[#e8b852] to-[#a76822] shadow-[0_0_16px_rgba(244,193,87,0.45),inset_0_1px_3px_rgba(255,255,255,0.65)]"
+                        initial={false}
+                        animate={{
+                            rotate: reduceMotion ? 0 : flips * 720,
+                            rotateY: reduceMotion ? 0 : flips * 360,
+                        }}
+                        transition={{
+                            duration: reduceMotion ? 0 : 0.85,
+                            ease: [0.22, 1, 0.36, 1],
+                        }}
+                        style={{
+                            transformStyle: "preserve-3d",
+                        }}
+                    >
+                        {/* Inner gold ring */}
+                        <span className="absolute inset-1 rounded-full border border-amber-900/35" />
+
+                        {/* Star visible before hover */}
+                        <motion.span
+                            initial={false}
+                            animate={{
+                                opacity: isActive ? 0 : 1,
+                                scale: isActive ? 0.3 : 1,
+                            }}
+                            transition={{
+                                duration: reduceMotion ? 0 : 0.2,
+                            }}
+                            className="absolute text-lg font-black text-[#794515]"
+                        >
+                            ✦
+                        </motion.span>
+
+                        {/* Credit balance revealed inside coin */}
+                        <motion.span
+                            key={credits ?? "unknown"}
+                            initial={false}
+                            animate={{
+                                opacity: isActive ? 1 : 0,
+                                scale: isActive ? 1 : 0.4,
+                            }}
+                            transition={{
+                                delay: isActive && !reduceMotion ? 0.65 : 0,
+                                duration: reduceMotion ? 0 : 0.2,
+                                ease: "easeOut",
+                            }}
+                            className="relative z-10 text-[11px] font-black tabular-nums text-[#794515]"
+                        >
+                            {credits ?? "—"}
+                        </motion.span>
+                    </motion.span>
+                </motion.span>
             </span>
-        </motion.div>
+        </motion.button>
     );
 }
+
 
 function Navbar({ variant = "default" }) {
     const reduceMotion = useReducedMotion();
@@ -323,14 +504,13 @@ function Navbar({ variant = "default" }) {
     }
 
     return (
-        <header className="relative z-40 border-b border-white/[0.07] bg-[#080914]/85 text-white backdrop-blur-xl">
-            <nav
-                className="mx-auto flex h-20 max-w-330 items-center justify-between gap-4 px-5 sm:px-8 lg:px-10"
+        <header className="relative z-40 border-b border-violet-300/10 bg-[radial-gradient(ellipse_at_50%_0%,rgba(139,92,246,0.10),transparent_70%),linear-gradient(180deg,#100d20_0%,#0b0a18_100%)] text-white backdrop-blur-xl">            <nav
+                className="mx-auto flex h-20 max-w-330 items-center justify-between gap-4 px-5 sm:px-8 lg:px-10 md:grid md:grid-cols-[1fr_auto_1fr]"
                 aria-label="Main navigation"
             >
                 <Brand />
 
-                <div className="hidden items-center gap-8 text-sm text-slate-400 md:flex">
+                <div aria-current="page" className="hidden items-center gap-8 text-sm md:flex font-semibold text-violet-200 hover:text-violet-300">
                     {navLinks.map((link) => (
                         <Link
                             key={link.to}
@@ -349,7 +529,7 @@ function Navbar({ variant = "default" }) {
                     </span> */}
                 </div>
 
-                <div className="hidden items-center gap-3 md:flex">
+                <div className="hidden items-center justify-self-end gap-3 md:flex">
                     <CreditCoin />
                     <AccountMenu />
                 </div>

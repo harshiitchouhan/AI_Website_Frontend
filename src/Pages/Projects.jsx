@@ -89,28 +89,39 @@ function ProjectsHeader({ displayName, email }) {
                     <img src={webloomLogo} alt="Webloom" className="h-7 w-auto object-contain" />
                 </Link>
                 <div className="hidden items-center gap-8 text-sm text-slate-400 sm:flex">
-                    <Link to="/explore" className="transition hover:text-white">Explore</Link>
+                    <Link to="/" aria-current="page" className="font-semibold text-violet-200">Home</Link>
+                    <Link to="/explore" aria-current="page" className="font-semibold text-violet-200">Explore</Link>
                     <Link to="/projects" aria-current="page" className="font-semibold text-violet-200">Projects</Link>
-                    <span title="Coming soon" className="cursor-not-allowed text-slate-600">Pricing · Soon</span>
+                    <Link to="/pricing" aria-current="page" className="font-semibold text-violet-200">Pricing</Link>
+
                 </div>
                 <details className="group relative">
                     <summary className="flex h-10 cursor-pointer list-none items-center gap-3 rounded-full border border-white/10 bg-white/4.5 pl-1.5 pr-4 [&::-webkit-details-marker]:hidden">
+                        
                         <span className="flex h-7 w-7 items-center justify-center rounded-full bg-violet-500/30 text-xs font-bold text-violet-100">
                             {displayName.charAt(0).toUpperCase()}
                         </span>
+
                         <span className="max-w-24 truncate text-xs font-semibold text-slate-200 sm:max-w-40 sm:text-sm">{displayName}</span>
-                        <span className="text-xs text-slate-500 group-open:rotate-180">⌄</span>
+                        
                     </summary>
+
                     <div className="absolute right-0 z-40 mt-3 w-60 rounded-2xl border border-violet-300/15 bg-[#1b1729] p-2 shadow-[0_22px_60px_rgba(0,0,0,0.5)]">
+                        
                         <div className="border-b border-white/10 px-3 py-3">
                             <p className="truncate text-sm font-semibold text-white">{displayName}</p>
                             <p className="mt-1 truncate text-xs text-slate-400">{email}</p>
+                        
                         </div>
+
                         <button type="button" onClick={handleLogout} disabled={loggingOut} className="mt-1 w-full rounded-xl px-3 py-3 text-left text-sm text-rose-300 transition hover:bg-rose-400/10 disabled:opacity-50">
                             {loggingOut ? "Logging out..." : "Logout"}
                         </button>
+
                         {logoutError && <p role="alert" className="px-3 pb-2 text-xs text-rose-300">{logoutError}</p>}
+                    
                     </div>
+                    
                 </details>
             </nav>
         </header>
