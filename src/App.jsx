@@ -24,22 +24,43 @@ function App(){
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path ="/" element = {<Home></Home>} />
-          <Route
-              path="/explore"
-              element={
-                  <ProtectedRoute>
-                      <Explore />
-                  </ProtectedRoute>
-              }
-          />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/studio" element={<Studio />} />
-          <Route path="/studio/:projectId" element={<Studio />} />
-          <Route path="/why-webloom" element={<WhyWebloom />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/site/:slug" element={<DeployedSite />} />
-          <Route path="/pricing" element={<Pricing/>} />
+        {/* Public Routes */}
+        
+        <Route path="/" element={<Home />} />
+        <Route path="/why-webloom" element={<WhyWebloom />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/site/:slug" element={<DeployedSite />} />
+        <Route path="/explore" element={<Explore />} />
+
+        {/* Protected Routes */}
+
+        <Route
+            path="/projects"
+            element={
+                <ProtectedRoute>
+                    <Projects />
+                </ProtectedRoute>
+            }
+        />
+
+        <Route
+            path="/studio"
+            element={
+                <ProtectedRoute>
+                    <Studio />
+                </ProtectedRoute>
+            }
+        />
+
+        <Route
+            path="/studio/:projectId"
+            element={
+                <ProtectedRoute>
+                    <Studio />
+                </ProtectedRoute>
+            }
+        />
         </Routes>
       </BrowserRouter>
       
