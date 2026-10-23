@@ -676,7 +676,7 @@ export default function Studio() {
                             maxLength={120}
                             className="w-full max-w-72 truncate rounded-md bg-transparent px-1 py-1 text-sm font-semibold text-slate-100 outline-none focus:bg-white/5 disabled:cursor-default sm:max-w-96"
                         />
-                        <span className="ml-1 text-[11px] text-slate-500">{projectId ? "Saved project" : "New project"}</span>
+                        <span className="ml-38 text-[11px] text-slate-500">{projectId ? "Saved project" : "New project"}</span>
                     </div>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">

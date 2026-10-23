@@ -561,8 +561,9 @@ export default function Pricing() {
                         <img src={webloomLogo} alt="Webloom" className="h-7 w-auto object-contain" />
                     </Link>
                     <div className="hidden items-center gap-8 text-sm text-slate-400 sm:flex">
-                        <Link to="/explore" className="transition hover:text-white">Explore</Link>
-                        <Link to="/projects" className="transition hover:text-white">Projects</Link>
+                        <Link to="/" aria-current="page" className="font-semibold text-violet-200">Home</Link>
+                        <Link to="/explore"aria-current="page" className="font-semibold text-violet-200">Explore</Link>
+                        <Link to="/projects" aria-current="page" className="font-semibold text-violet-200">Projects</Link>
                         <Link to="/pricing" aria-current="page" className="font-semibold text-violet-200">Pricing</Link>
                     </div>
                     <Link to={user ? "/studio" : "/login"} className="inline-flex items-center gap-2 rounded-full border border-violet-300/25 bg-violet-300/10 px-4 py-2.5 text-xs font-bold text-violet-100 transition hover:bg-violet-300/20 sm:text-sm">
