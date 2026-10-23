@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams , useLocation , Navigate } from "react-router";
 import { useSelector } from "react-redux";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import webloomLogo from "../assets/Webloom.png";
@@ -9,6 +9,7 @@ const GENERATION_COST = 50;
 // This is a display estimate, not a server-provided ETA.
 // Keep this copy aligned with the backend's request timeout.
 const GENERATION_ESTIMATE = "5–10 minutes for detailed websites";
+const location = useLocation();
 
 const CREATIVE_STAGES = [
     {
@@ -646,13 +647,11 @@ export default function Studio() {
 
     if (!user) {
         return (
-            <div className="grid min-h-screen place-items-center bg-[#090914] px-6 text-center text-white">
-                <div>
-                    <h1 className="text-3xl font-semibold">Log in to use Webloom Studio</h1>
-                    <p className="mt-3 text-slate-400">Generate websites and save them to your account.</p>
-                    <Link to="/login" className="mt-6 inline-flex rounded-xl bg-violet-300 px-6 py-3 font-semibold text-[#180e2d]">Go to login</Link>
-                </div>
-            </div>
+            <Navigate
+                to="/login"
+                replace
+                state={{ from: location }}
+            />
         );
     }
 

@@ -26,6 +26,7 @@ function LoginHero({ reveal }) {
                             </span>
                         ))}
                     </div>
+                    
                 </motion.section>
     );
 }

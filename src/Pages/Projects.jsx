@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate , useLocation , Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../Redux/authSlice";
 import { motion } from "framer-motion";
 import webloomLogo from "../assets/Webloom.png";
 
 const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:4000").replace(/\/$/, "");
+const location = useLocation();
 
 function Icon({ type, className = "h-5 w-5" }) {
     const common = {
@@ -411,13 +412,11 @@ export default function Projects() {
 
     if (!user) {
         return (
-            <div className="grid min-h-screen place-items-center bg-[#090914] px-6 text-center text-white">
-                <div>
-                    <h1 className="text-3xl font-semibold">Sign in to see your projects</h1>
-                    <p className="mt-3 text-sm text-slate-400">Your Webloom projects belong to your account.</p>
-                    <Link to="/login" className="mt-6 inline-flex rounded-xl bg-violet-300 px-6 py-3 font-semibold text-[#120d24]">Go to login</Link>
-                </div>
-            </div>
+            <Navigate
+                to="/login"
+                replace
+                state={{ from: location }}
+            />
         );
     }
 
