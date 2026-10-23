@@ -25,12 +25,13 @@ function App(){
       <BrowserRouter>
         <Routes>
         {/* Public Routes */}
-        
+
         <Route path="/" element={<Home />} />
         <Route path="/why-webloom" element={<WhyWebloom />} />
         <Route path="/login" element={<Login />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/site/:slug" element={<DeployedSite />} />
+        {/*  explore shd be login free */}
         <Route path="/explore" element={<Explore />} />
 
         {/* Protected Routes */}
