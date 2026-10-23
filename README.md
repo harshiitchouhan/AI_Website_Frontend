@@ -113,6 +113,7 @@ Create a local `.env` file:
 
 ```dotenv
 VITE_API_URL=http://localhost:4000
+VITE_RAZARPAY_TEST_ID = your_razorpay_test_id
 ```
 
 Start the development server:
