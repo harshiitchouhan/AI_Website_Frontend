@@ -12,6 +12,7 @@ import Studio from "./Pages/Studio";
 import Projects from "./Pages/Projects";
 import DeployedSite from "./Pages/DeployedSite";
 import Pricing from "./Pages/Pricing"
+import Register from "./Pages/Register";
 
 function App(){
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App(){
         <Route path="/" element={<Home />} />
         <Route path="/why-webloom" element={<WhyWebloom />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/site/:slug" element={<DeployedSite />} />
         {/*  explore shd be login free */}

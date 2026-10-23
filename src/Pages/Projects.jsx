@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import webloomLogo from "../assets/Webloom.png";
 
 const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:4000").replace(/\/$/, "");
-const location = useLocation();
 
 function Icon({ type, className = "h-5 w-5" }) {
     const common = {
@@ -281,6 +280,7 @@ export default function Projects() {
     const [deletingId, setDeletingId] = useState(null);
     const [reloadCount, setReloadCount] = useState(0);
     const [copiedId, setCopiedId] = useState(null);
+    const location = useLocation();
 
     const displayName = user?.name?.trim() || user?.email?.split("@")[0] || "Account";
 

@@ -9,7 +9,7 @@ const GENERATION_COST = 50;
 // This is a display estimate, not a server-provided ETA.
 // Keep this copy aligned with the backend's request timeout.
 const GENERATION_ESTIMATE = "5–10 minutes for detailed websites";
-const location = useLocation();
+
 
 const CREATIVE_STAGES = [
     {
@@ -312,6 +312,7 @@ export default function Studio() {
     const reduceMotion = useReducedMotion();
     const { user, initialized } = useSelector((state) => state.auth);
     const [credits, setCredits] = useCredits(user);
+    const location = useLocation();
 
     const [prompt, setPrompt] = useState("");
     const [title, setTitle] = useState("Untitled website");
