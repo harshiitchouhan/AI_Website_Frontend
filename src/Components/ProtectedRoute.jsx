@@ -8,6 +8,7 @@ export default function ProtectedRoute({ children }) {
     const { user, loading } = useSelector((state) => state.auth);
 
     // Show loader while checking authentication
+    // loader
     if (loading) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-[#090711]">
