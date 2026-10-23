@@ -16,8 +16,6 @@
 
 **Webloom** turns natural-language descriptions into website code. Users can sign in, describe a site, view the generated result in a preview, revisit their projects, and access deployment-related experiences. The interface uses a dark, violet-accented visual system with motion-driven interactions.
 
-> **Project note:** This README is based on the supplied folder structure and project development history. Features described as *planned/integration-dependent* should be verified against the latest source code before publishing the repository.
-
 ## Highlights
 
 - **AI Studio:** Conversational website generation powered by a backend AI endpoint.
