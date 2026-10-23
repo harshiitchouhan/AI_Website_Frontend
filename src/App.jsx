@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 
 import { fetchCurrentUser } from "./Redux/authSlice";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import Studio from "./Pages/Studio.";
+import Studio from "./Pages/Studio";
 import Projects from "./Pages/Projects";
 import DeployedSite from "./Pages/DeployedSite";
 import Pricing from "./Pages/Pricing"
