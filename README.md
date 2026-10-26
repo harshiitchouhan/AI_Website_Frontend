@@ -6,8 +6,7 @@
 
 **A conversational AI website builder with live previews, project management, and a polished creator studio.**
 
-![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-Frontend-646CFF?logo=vite&logoColor=white) ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss&logoColor=white) ![Redux](https://img.shields.io/badge/Redux_Toolkit-State-764ABC?logo=redux&logoColor=white) ![License](https://img.shields.io/badge/License-Not_specified-lightgrey)
-
+![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-Frontend-646CFF?logo=vite&logoColor=white) ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss&logoColor=white) ![Redux](https://img.shields.io/badge/Redux_Toolkit-State-764ABC?logo=redux&logoColor=white)
 </div>
 
 ---
