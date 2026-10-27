@@ -290,7 +290,7 @@ function Home() {
                                     </div>
                                 </form>
 
-                                <div className="mt-6">
+                                {/* <div className="mt-6">
                                     <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.13em] text-slate-500">Try an example</p>
                                     <div className="flex flex-wrap gap-2">
                                         {concepts.map((concept) => (
@@ -308,7 +308,7 @@ function Home() {
                                             </button>
                                         ))}
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
 
                             <div className="min-w-0 rounded-[20px] border border-white/10 bg-[#090c17] p-3 sm:p-4">
@@ -320,9 +320,6 @@ function Home() {
                                     </span>
                                 </div>
                                 <WebsitePreview concept={selectedConcept} />
-                                <p className="px-1 pt-3 text-[11px] leading-5 text-slate-500">
-                                    Demo mode: previews use sample designs. Connect your AI API for real website generation.
-                                </p>
                             </div>
                         </div>
                     </motion.div>
@@ -390,16 +387,18 @@ function Home() {
                 </section>
 
                 {/* Templates: three real-looking editorial previews, each opens the studio. */}
-                <section id="templates" className="relative scroll-mt-24 border-y border-white/[0.07] bg-[#0d0e1a]/80 py-24 sm:py-28">
+                {/* <section id="templates" className="relative scroll-mt-24 border-y border-white/[0.07] bg-[#0d0e1a]/80 py-24 sm:py-28">
                     
                     <div className="mx-auto max-w-[330 px-5 sm:px-8 lg:px-10">
                         
                         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={sequence} className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-                            <div><motion.p variants={reveal} className="text-xs font-semibold tracking-[0.22em] text-violet-300">EXPLORE THE POSSIBILITIES</motion.p><motion.h2 variants={reveal} className="mt-5 text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">Every idea has a different look.</motion.h2></div>
+                            <div>
+                                <motion.p variants={reveal} className="text-xs font-semibold tracking-[0.22em] text-violet-300">EXPLORE THE POSSIBILITIES</motion.p>
+                                <motion.h2 variants={reveal} className="mt-5 text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">Every idea has a different look.</motion.h2>
+                                </div>
                             <motion.p variants={reveal} className="max-w-76.25 text-sm leading-7 text-slate-400">A few starting points. Countless ways to make them yours.</motion.p>
                         </motion.div>
-                        <
-                            div className="mt-12 grid gap-5 md:grid-cols-3">
+                        <div className="mt-12 grid gap-5 md:grid-cols-3">
                             {concepts.map((concept, index) => (
                                 <motion.button type="button" key={concept.id} onClick={() => exploreTemplate(concept)} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ delay: index * 0.13, duration: 0.7 }} whileHover={reduceMotion ? {} : { y: -7 }} className="group min-w-0 rounded-[22px] border border-white/10 bg-[#141525] p-3 text-left transition-colors hover:border-violet-400/35 sm:p-4">
                                     <TemplateArt concept={concept} />
@@ -412,10 +411,10 @@ function Home() {
                             ))}
                         </div>
                     </div>
-                </section>
+                </section> */}
 
                 {/* The three-step timeline is a continuous track, not feature cards. */}
-                <section id="how-it-works" className="mx-auto max-w-330 scroll-mt-24 px-5 py-28 sm:px-8 lg:px-10 lg:py-36">
+                <section id="how-it-works" className="mx-auto max-w-330 scroll-mt-24 px-5 py-28 sm:px-8 lg:px-10 lg:py-12">
                     
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={sequence} className="mx-auto max-w-175 text-center">
                         <motion.p variants={reveal} className="text-xs font-semibold tracking-[0.22em] text-violet-300">THE CREATIVE FLOW</motion.p><motion.h2 variants={reveal} className="mt-5 text-4xl font-semibold tracking-[-0.045em] sm:text-6xl">From a blank page to <span className="font-serif italic font-normal text-violet-300">your page.</span></motion.h2><motion.p variants={reveal} className="mx-auto mt-5 max-w-130 text-sm leading-7 text-slate-400 sm:text-base">No complicated brief. No starting from scratch. Just describe, explore, and refine.</motion.p>
