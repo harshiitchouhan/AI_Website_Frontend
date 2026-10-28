@@ -325,8 +325,8 @@ function Home() {
                     </motion.div>
                 </section>
 
-
                 {/* Creative capabilities: editorial layout, not three identical feature cards. */}
+
                 <section id="capabilities" className="mx-auto max-w-330 scroll-mt-24 px-5 pb-28 sm:px-8 lg:px-10 lg:pb-36">
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={sequence} className="mb-12 flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
                         <div>
