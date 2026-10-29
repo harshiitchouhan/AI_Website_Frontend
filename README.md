@@ -81,7 +81,7 @@ AI_Website_Frontend/
 │   │   ├── Login.jsx
 │   │   ├── Pricing.jsx
 │   │   ├── Projects.jsx
-│   │   ├── Studio..jsx
+│   │   ├── Studio.jsx
 │   │   ├── WebloomChrome.jsx
 │   │   └── WhyWebloom.jsx
 │   ├── Redux/
@@ -95,8 +95,6 @@ AI_Website_Frontend/
 ├── package.json
 └── vite.config.js
 ```
-
-> **Filename check:** The supplied tree shows `Studio..jsx` (two dots). Ensure the filename and imports match; rename to `Studio.jsx` if the extra dot is accidental.
 
 ## Getting started
 
