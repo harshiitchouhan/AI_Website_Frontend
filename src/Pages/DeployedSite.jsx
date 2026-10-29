@@ -22,7 +22,7 @@ export default function DeployedSite() {
     const [progress, setProgress] = useState(0);
     const [retryCount, setRetryCount] = useState(0);
 
-    // Fetch the published website.
+    // fetching api
     useEffect(() => {
         const controller = new AbortController();
 
